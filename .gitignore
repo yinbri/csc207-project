@@ -1,0 +1,5 @@
+target/
+.idea/
+*.iml
+budget_data.json
+.DS_Store
