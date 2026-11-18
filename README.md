@@ -184,7 +184,7 @@ package, never about Swing, OkHttp or files. Presenters update the `DashboardVie
 | Expense entities: `Category`, `Expense` | Merged (PR 2) |
 | `ExchangeRate` entity, exchange rate interface and API data access object | Merged (PR 3) |
 | Budget entities: `MonthlyBudget`, `MonthlySpending` | Merged (PR 4) |
-| Data storage: in-memory and JSON file data access objects | Next (PR 5) |
+| Data storage: in-memory and JSON file data access objects | Merged (PR 5) |
 | Use cases: Add Expense, Set Monthly Budget, View Monthly Summary, View Spending in Home Currency | Not started |
 | Unit tests for every interactor, 100% line coverage of entities and use cases | In progress: entities tested; interactors to come |
 | UML class diagram and sequence diagrams | To do |
