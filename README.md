@@ -165,7 +165,7 @@ src/main/java
 │                       ViewModel and State
 ├── data_access/        FileBudgetDataAccessObject, InMemoryBudgetDataAccessObject,
 │                       ExchangeRateApiDataAccessObject
-├── view/               DashboardView (Swing)
+├── view/               DashboardView and one panel per use case, e.g. AddExpensePanel (Swing)
 └── app/                Main, AppBuilder (wires everything together)
 ```
 
@@ -185,8 +185,9 @@ package, never about Swing, OkHttp or files. Presenters update the `DashboardVie
 | `ExchangeRate` entity, exchange rate interface and API data access object | Merged (PR 3) |
 | Budget entities: `MonthlyBudget`, `MonthlySpending` | Merged (PR 4) |
 | Data storage: in-memory and JSON file data access objects | Merged (PR 5) |
-| Use cases: Add Expense, Set Monthly Budget, View Monthly Summary, View Spending in Home Currency | Not started |
-| Unit tests for every interactor, 100% line coverage of entities and use cases | In progress: entities tested; interactors to come |
+| Use case: Add Expense (interactor, controller, presenter, `AddExpensePanel`, interactor tests) | This PR (PR 6) |
+| Use cases: Set Monthly Budget, View Monthly Summary, View Spending in Home Currency | Not started |
+| Unit tests for every interactor, 100% line coverage of entities and use cases | In progress: entities and the Add Expense interactor tested; other interactors to come |
 | UML class diagram and sequence diagrams | To do |
 
 ---
@@ -200,8 +201,12 @@ mvn compile exec:java      # start the app
 mvn test                   # run the unit tests
 ```
 
-Right now the window shows the dashboard layout with empty placeholder panels; each use case replaces
-one of them when it is merged.
+Right now the *Add an expense* form works: a valid expense is saved to `budget_data.json` in the
+working directory and a confirmation appears at the bottom of the window, and invalid input shows an
+error there instead. The other panels are still empty placeholders; each use case replaces one of them
+when it is merged. The expense list appears once View Monthly Summary is merged.
+
+To keep data somewhere else, pass a file path as the first program argument.
 
 ---
 

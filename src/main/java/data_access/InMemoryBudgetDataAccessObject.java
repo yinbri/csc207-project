@@ -2,6 +2,7 @@ package data_access;
 
 import entity.Expense;
 import entity.MonthlyBudget;
+import use_case.add_expense.AddExpenseDataAccessInterface;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -16,15 +17,12 @@ import java.util.Map;
  * (e.g. {@code AddExpenseDataAccessInterface}). Because {@link FileBudgetDataAccessObject}
  * extends this class, it picks those interfaces up automatically.</p>
  */
-public class InMemoryBudgetDataAccessObject {
+public class InMemoryBudgetDataAccessObject implements AddExpenseDataAccessInterface {
 
     protected final List<Expense> expenses = new ArrayList<>();
     protected final Map<YearMonth, MonthlyBudget> budgets = new HashMap<>();
 
-    /**
-     * Saves an expense.
-     * @param expense the expense to save
-     */
+    @Override
     public void saveExpense(Expense expense) {
         expenses.add(expense);
     }
