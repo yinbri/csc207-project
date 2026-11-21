@@ -1,5 +1,7 @@
 package interface_adapter.dashboard;
 
+import entity.Category;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,19 @@ public class DashboardViewModel {
     public static final String[] HOME_CURRENCY_OPTIONS = {
         "CNY", "INR", "KRW", "JPY", "VND", "PHP", "PKR", "BDT", "NGN", "BRL", "MXN", "EUR", "GBP", "USD",
     };
+
+    /**
+     * Returns the category names the user can choose from.
+     * @return category display names
+     */
+    public static String[] getCategoryOptions() {
+        final Category[] categories = Category.values();
+        final String[] names = new String[categories.length];
+        for (int i = 0; i < categories.length; i++) {
+            names[i] = categories[i].getDisplayName();
+        }
+        return names;
+    }
 
     private final List<DashboardViewModelListener> listeners = new ArrayList<>();
     private DashboardState state = new DashboardState();

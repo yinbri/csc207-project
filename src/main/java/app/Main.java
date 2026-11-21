@@ -9,12 +9,14 @@ import javax.swing.SwingUtilities;
 public class Main {
     /**
      * Builds and shows the app.
-     * @param args unused
+     * @param args optional: path of the data file (default budget_data.json)
      */
     public static void main(String[] args) {
+        final String dataFile = args.length > 0 ? args[0] : "budget_data.json";
         SwingUtilities.invokeLater(() -> {
-            final JFrame application = new AppBuilder()
+            final JFrame application = new AppBuilder(dataFile)
                     .addDashboardView()
+                    .addAddExpenseUseCase()
                     .build();
             application.setLocationRelativeTo(null);
             application.setVisible(true);

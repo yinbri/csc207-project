@@ -1,6 +1,10 @@
 package app;
 
+import data_access.FileBudgetDataAccessObject;
+import interface_adapter.add_expense.AddExpenseController;
+import interface_adapter.add_expense.AddExpensePresenter;
 import interface_adapter.dashboard.DashboardViewModel;
+import use_case.add_expense.AddExpenseInteractor;
 import view.DashboardView;
 
 import javax.swing.JFrame;
@@ -11,8 +15,18 @@ import javax.swing.WindowConstants;
  * from Clean Architecture). Each addXUseCase method added later plugs in one use case.
  */
 public class AppBuilder {
+    private final FileBudgetDataAccessObject budgetDataAccess;
+
     private DashboardViewModel dashboardViewModel;
     private DashboardView dashboardView;
+
+    /**
+     * Creates the builder.
+     * @param dataFilePath where budget data is saved
+     */
+    public AppBuilder(String dataFilePath) {
+        this.budgetDataAccess = new FileBudgetDataAccessObject(dataFilePath);
+    }
 
     /**
      * Adds the dashboard view.
@@ -21,6 +35,17 @@ public class AppBuilder {
     public AppBuilder addDashboardView() {
         dashboardViewModel = new DashboardViewModel();
         dashboardView = new DashboardView(dashboardViewModel);
+        return this;
+    }
+
+    /**
+     * Adds the Add Expense use case.
+     * @return this builder
+     */
+    public AppBuilder addAddExpenseUseCase() {
+        final AddExpenseInteractor interactor = new AddExpenseInteractor(budgetDataAccess,
+                new AddExpensePresenter(dashboardViewModel));
+        dashboardView.getAddExpensePanel().setAddExpenseController(new AddExpenseController(interactor));
         return this;
     }
 
