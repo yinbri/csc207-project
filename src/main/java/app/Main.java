@@ -18,6 +18,7 @@ public class Main {
                     .addDashboardView()
                     .addAddExpenseUseCase()
                     .addSetBudgetUseCase()
+                    .addViewSummaryUseCase()
                     .build();
             application.setLocationRelativeTo(null);
             application.setVisible(true);

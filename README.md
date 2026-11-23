@@ -186,9 +186,10 @@ package, never about Swing, OkHttp or files. Presenters update the `DashboardVie
 | Budget entities: `MonthlyBudget`, `MonthlySpending` | Merged (PR 4) |
 | Data storage: in-memory and JSON file data access objects | Merged (PR 5) |
 | Use case: Add Expense (interactor, controller, presenter, `AddExpensePanel`, interactor tests) | Merged (PR 6) |
-| Use case: Set Monthly Budget (interactor, controller, presenter, `BudgetPanel`, interactor tests) | This PR (PR 7) |
-| Use cases: View Monthly Summary, View Spending in Home Currency | Not started |
-| Unit tests for every interactor, 100% line coverage of entities and use cases | In progress: entities and the Add Expense and Set Monthly Budget interactors tested; other interactors to come |
+| Use case: Set Monthly Budget (interactor, controller, presenter, `BudgetPanel`, interactor tests) | Merged (PR 7) |
+| Use case: View Monthly Summary (interactor, controller, presenter, `SummaryPanel`, interactor tests) | This PR (PR 8) |
+| Use case: View Spending in Home Currency | Not started |
+| Unit tests for every interactor, 100% line coverage of entities and use cases | In progress: entities and the Add Expense, Set Monthly Budget, and View Monthly Summary interactors tested; the currency interactor to come |
 | UML class diagram and sequence diagrams | To do |
 
 ---
@@ -202,10 +203,11 @@ mvn compile exec:java      # start the app
 mvn test                   # run the unit tests
 ```
 
-Right now the *Add an expense* form works: a valid expense is saved to `budget_data.json` in the
-working directory and a confirmation appears at the bottom of the window, and invalid input shows an
-error there instead. The other panels are still empty placeholders; each use case replaces one of them
-when it is merged. The expense list appears once View Monthly Summary is merged.
+Add Expense and Set Monthly Budget save to `budget_data.json` and show a confirmation at the bottom
+of the window. Invalid input shows an error there instead. View Monthly Summary loads the current
+month at startup. Type a month and press **Show month** to see that month's expenses, budget, remaining
+amount, and category totals. The remaining amount is red when spending is over the budget. The home
+currency panel is still an empty placeholder.
 
 To keep data somewhere else, pass a file path as the first program argument.
 
