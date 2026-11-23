@@ -17,6 +17,7 @@ public class Main {
             final JFrame application = new AppBuilder(dataFile)
                     .addDashboardView()
                     .addAddExpenseUseCase()
+                    .addSetBudgetUseCase()
                     .build();
             application.setLocationRelativeTo(null);
             application.setVisible(true);

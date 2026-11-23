@@ -26,6 +26,7 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
     private final DashboardViewModel viewModel;
 
     private final AddExpensePanel addExpensePanel;
+    private final BudgetPanel budgetPanel;
 
     private final JLabel messageLabel = new JLabel(" ");
 
@@ -33,6 +34,7 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
         this.viewModel = viewModel;
         this.viewModel.addListener(this);
         this.addExpensePanel = new AddExpensePanel(viewModel);
+        this.budgetPanel = new BudgetPanel();
 
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -55,7 +57,7 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
     private JPanel buildControls() {
         final JPanel controls = new JPanel();
         controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
-        controls.add(placeholder("Monthly budget (" + DashboardViewModel.LOCAL_CURRENCY + ")"));
+        controls.add(budgetPanel);
         controls.add(Box.createVerticalStrut(10));
         controls.add(addExpensePanel);
         controls.add(Box.createVerticalStrut(10));
@@ -78,6 +80,10 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
 
     public AddExpensePanel getAddExpensePanel() {
         return addExpensePanel;
+    }
+
+    public BudgetPanel getBudgetPanel() {
+        return budgetPanel;
     }
 
     @Override

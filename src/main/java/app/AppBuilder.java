@@ -4,7 +4,10 @@ import data_access.FileBudgetDataAccessObject;
 import interface_adapter.add_expense.AddExpenseController;
 import interface_adapter.add_expense.AddExpensePresenter;
 import interface_adapter.dashboard.DashboardViewModel;
+import interface_adapter.set_budget.SetBudgetController;
+import interface_adapter.set_budget.SetBudgetPresenter;
 import use_case.add_expense.AddExpenseInteractor;
+import use_case.set_budget.SetBudgetInteractor;
 import view.DashboardView;
 
 import javax.swing.JFrame;
@@ -46,6 +49,17 @@ public class AppBuilder {
         final AddExpenseInteractor interactor = new AddExpenseInteractor(budgetDataAccess,
                 new AddExpensePresenter(dashboardViewModel));
         dashboardView.getAddExpensePanel().setAddExpenseController(new AddExpenseController(interactor));
+        return this;
+    }
+
+    /**
+     * Adds the Set Monthly Budget use case.
+     * @return this builder
+     */
+    public AppBuilder addSetBudgetUseCase() {
+        final SetBudgetInteractor interactor = new SetBudgetInteractor(budgetDataAccess,
+                new SetBudgetPresenter(dashboardViewModel));
+        dashboardView.getBudgetPanel().setSetBudgetController(new SetBudgetController(interactor));
         return this;
     }
 
