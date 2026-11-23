@@ -6,12 +6,16 @@ import interface_adapter.add_expense.AddExpensePresenter;
 import interface_adapter.dashboard.DashboardViewModel;
 import interface_adapter.set_budget.SetBudgetController;
 import interface_adapter.set_budget.SetBudgetPresenter;
+import interface_adapter.view_summary.ViewSummaryController;
+import interface_adapter.view_summary.ViewSummaryPresenter;
 import use_case.add_expense.AddExpenseInteractor;
 import use_case.set_budget.SetBudgetInteractor;
+import use_case.view_summary.ViewSummaryInteractor;
 import view.DashboardView;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import java.time.YearMonth;
 
 /**
  * Builds the application by creating each object and wiring them together (the "Main component"
@@ -22,6 +26,7 @@ public class AppBuilder {
 
     private DashboardViewModel dashboardViewModel;
     private DashboardView dashboardView;
+    private ViewSummaryController viewSummaryController;
 
     /**
      * Creates the builder.
@@ -64,6 +69,18 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the View Monthly Summary use case.
+     * @return this builder
+     */
+    public AppBuilder addViewSummaryUseCase() {
+        final ViewSummaryInteractor interactor = new ViewSummaryInteractor(budgetDataAccess,
+                new ViewSummaryPresenter(dashboardViewModel));
+        viewSummaryController = new ViewSummaryController(interactor);
+        dashboardView.getSummaryPanel().setController(viewSummaryController);
+        return this;
+    }
+
+    /**
      * Creates the application window.
      * @return the application window
      */
@@ -72,6 +89,9 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.add(dashboardView);
         application.setSize(1100, 650);
+        if (viewSummaryController != null) {
+            viewSummaryController.execute(YearMonth.now().toString());
+        }
         return application;
     }
 }

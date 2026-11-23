@@ -4,6 +4,7 @@ import entity.Expense;
 import entity.MonthlyBudget;
 import use_case.add_expense.AddExpenseDataAccessInterface;
 import use_case.set_budget.SetBudgetDataAccessInterface;
+import use_case.view_summary.ViewSummaryDataAccessInterface;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Map;
  * extends this class, it picks those interfaces up automatically.</p>
  */
 public class InMemoryBudgetDataAccessObject implements AddExpenseDataAccessInterface,
-        SetBudgetDataAccessInterface {
+        SetBudgetDataAccessInterface, ViewSummaryDataAccessInterface {
 
     protected final List<Expense> expenses = new ArrayList<>();
     protected final Map<YearMonth, MonthlyBudget> budgets = new HashMap<>();
@@ -39,6 +40,7 @@ public class InMemoryBudgetDataAccessObject implements AddExpenseDataAccessInter
      * @param month the month
      * @return the month's expenses (possibly empty)
      */
+    @Override
     public List<Expense> getExpensesForMonth(YearMonth month) {
         final List<Expense> result = new ArrayList<>();
         for (Expense expense : expenses) {
@@ -54,6 +56,7 @@ public class InMemoryBudgetDataAccessObject implements AddExpenseDataAccessInter
      * @param month the month
      * @return true if a budget exists
      */
+    @Override
     public boolean hasBudget(YearMonth month) {
         return budgets.containsKey(month);
     }
@@ -63,6 +66,7 @@ public class InMemoryBudgetDataAccessObject implements AddExpenseDataAccessInter
      * @param month the month
      * @return the budget, or null if none has been set
      */
+    @Override
     public MonthlyBudget getBudget(YearMonth month) {
         return budgets.get(month);
     }
