@@ -19,6 +19,7 @@ public class Main {
                     .addAddExpenseUseCase()
                     .addSetBudgetUseCase()
                     .addViewSummaryUseCase()
+                    .addConvertCurrencyUseCase()
                     .build();
             application.setLocationRelativeTo(null);
             application.setVisible(true);

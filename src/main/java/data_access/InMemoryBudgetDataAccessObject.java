@@ -3,6 +3,7 @@ package data_access;
 import entity.Expense;
 import entity.MonthlyBudget;
 import use_case.add_expense.AddExpenseDataAccessInterface;
+import use_case.convert_currency.ConvertCurrencyDataAccessInterface;
 import use_case.set_budget.SetBudgetDataAccessInterface;
 import use_case.view_summary.ViewSummaryDataAccessInterface;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  * extends this class, it picks those interfaces up automatically.</p>
  */
 public class InMemoryBudgetDataAccessObject implements AddExpenseDataAccessInterface,
-        SetBudgetDataAccessInterface, ViewSummaryDataAccessInterface {
+        SetBudgetDataAccessInterface, ViewSummaryDataAccessInterface, ConvertCurrencyDataAccessInterface {
 
     protected final List<Expense> expenses = new ArrayList<>();
     protected final Map<YearMonth, MonthlyBudget> budgets = new HashMap<>();

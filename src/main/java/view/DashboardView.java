@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 
 /**
@@ -28,6 +26,7 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
     private final AddExpensePanel addExpensePanel;
     private final BudgetPanel budgetPanel;
     private final SummaryPanel summaryPanel;
+    private final CurrencyPanel currencyPanel;
 
     private final JLabel messageLabel = new JLabel(" ");
 
@@ -37,6 +36,7 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
         this.addExpensePanel = new AddExpensePanel(viewModel);
         this.budgetPanel = new BudgetPanel();
         this.summaryPanel = new SummaryPanel(viewModel);
+        this.currencyPanel = new CurrencyPanel(() -> viewModel.getState().getMonth());
 
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -63,21 +63,13 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
         controls.add(Box.createVerticalStrut(10));
         controls.add(addExpensePanel);
         controls.add(Box.createVerticalStrut(10));
-        controls.add(placeholder("View in home currency"));
+        controls.add(currencyPanel);
         controls.add(Box.createVerticalGlue());
         return controls;
     }
 
     public SummaryPanel getSummaryPanel() {
         return summaryPanel;
-    }
-
-    private static JPanel placeholder(String title) {
-        final JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createTitledBorder(title));
-        panel.setPreferredSize(new Dimension(260, 120));
-        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        return panel;
     }
 
     public AddExpensePanel getAddExpensePanel() {
@@ -88,9 +80,14 @@ public class DashboardView extends JPanel implements DashboardViewModelListener 
         return budgetPanel;
     }
 
+    public CurrencyPanel getCurrencyPanel() {
+        return currencyPanel;
+    }
+
     @Override
     public void stateChanged() {
         final DashboardState state = viewModel.getState();
+        currencyPanel.showConvertedText(state.getConvertedText());
         if (!state.getError().isEmpty()) {
             messageLabel.setForeground(OVER_RED);
             messageLabel.setText(state.getError());
