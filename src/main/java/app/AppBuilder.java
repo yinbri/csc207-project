@@ -1,14 +1,18 @@
 package app;
 
+import data_access.ExchangeRateApiDataAccessObject;
 import data_access.FileBudgetDataAccessObject;
 import interface_adapter.add_expense.AddExpenseController;
 import interface_adapter.add_expense.AddExpensePresenter;
+import interface_adapter.convert_currency.ConvertCurrencyController;
+import interface_adapter.convert_currency.ConvertCurrencyPresenter;
 import interface_adapter.dashboard.DashboardViewModel;
 import interface_adapter.set_budget.SetBudgetController;
 import interface_adapter.set_budget.SetBudgetPresenter;
 import interface_adapter.view_summary.ViewSummaryController;
 import interface_adapter.view_summary.ViewSummaryPresenter;
 import use_case.add_expense.AddExpenseInteractor;
+import use_case.convert_currency.ConvertCurrencyInteractor;
 import use_case.set_budget.SetBudgetInteractor;
 import use_case.view_summary.ViewSummaryInteractor;
 import view.DashboardView;
@@ -23,6 +27,7 @@ import java.time.YearMonth;
  */
 public class AppBuilder {
     private final FileBudgetDataAccessObject budgetDataAccess;
+    private final ExchangeRateApiDataAccessObject exchangeRateDataAccess = new ExchangeRateApiDataAccessObject();
 
     private DashboardViewModel dashboardViewModel;
     private DashboardView dashboardView;
@@ -77,6 +82,18 @@ public class AppBuilder {
                 new ViewSummaryPresenter(dashboardViewModel));
         viewSummaryController = new ViewSummaryController(interactor);
         dashboardView.getSummaryPanel().setController(viewSummaryController);
+        return this;
+    }
+
+    /**
+     * Adds the View Spending in Home Currency use case.
+     * @return this builder
+     */
+    public AppBuilder addConvertCurrencyUseCase() {
+        final ConvertCurrencyInteractor interactor = new ConvertCurrencyInteractor(budgetDataAccess,
+                exchangeRateDataAccess, new ConvertCurrencyPresenter(dashboardViewModel),
+                DashboardViewModel.LOCAL_CURRENCY);
+        dashboardView.getCurrencyPanel().setConvertCurrencyController(new ConvertCurrencyController(interactor));
         return this;
     }
 
